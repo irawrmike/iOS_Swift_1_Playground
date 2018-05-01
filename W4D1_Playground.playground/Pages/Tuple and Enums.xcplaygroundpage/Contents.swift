@@ -23,13 +23,16 @@ namedPersonTuple.age
  - Experiment:
  Try creating your own tuple. Mix in different variable types and try mixing some parameters with names and some without. Does it still work?
  */
+var testTuple = ("Mike", "Stoltman", 29)
+var testTupleWithNames = (first: "Mike", last: "Stoltman", age: 29)
+var testTupleSomeName = (first: "Mike", "Stoltman", age: 29)
 
-
+// it appears that all three ways of creating tuples works but with some names the name for an unnamed item is the index number
 /*:
  - Experiment:
  Try nesting tuples within one another. Create a tuple and add a tuple as one of its items.
  */
-
+var nestedTuple = ((1, 2, 3), 4, 5)
 
 /*:
  - Experiment:
@@ -41,9 +44,11 @@ let interestingNumbers = [
     "Fibonacci": [1, 1, 2, 3, 5, 8],
     "Square": [1, 4, 9, 16, 25],
 ]
-for (kind, numbers) in interestingNumbers {
-    
+for (_, numbers) in interestingNumbers {
+    print(numbers)
 }
+
+// the tuple is a combination of a string (key) and array (numbers) it is used to iterate through the dictionary for each combination
 
 /*:
  - Callout(Challenge):
@@ -52,8 +57,15 @@ for (kind, numbers) in interestingNumbers {
 To test: call your new function with eligable true and false, and print the two values
  (Hint: Use optional return value and conditional unwrapping)
  */
+func isEligible(name: String, age: Int, eligible: Bool) -> (String, Int)?{
+    if eligible{
+        return (name, age)
+    }
+    return nil
+}
 
-
+isEligible(name: "Mike", age: 29, eligible: true)
+isEligible(name: "Mike", age: 29, eligible: false)
 /*:
  ## Enums
  Enums are related values defined by the user. An example to think of this are the months within a year. There are only 12 months and when you are programming, you'll need a way to represent this. We could potentially use a String for each month, but that could lead to spelling mistakes. So instead, we can define our own values that makes it obvious to you.
@@ -69,12 +81,44 @@ enum Months: Int{
     case April
     case May, June, July, August
     //...
+    case September, October, November, December
     
     func abbreviatedStringForm() -> String {
         switch self {
-            default:
-                return ""
+        case .January:
+            return "Jan"
+        case .Feburary:
+            return "Feb"
+        case .March:
+            return "Mar"
+        case .April:
+            return "Apr"
+        case .May:
+            return "May"
+        case .June:
+            return "Jun"
+        case .July:
+            return "Jul"
+        case .August:
+            return "Aug"
+        case .September:
+            return "Sep"
+        case .October:
+            return "Oct"
+        case .November:
+            return "Nov"
+        case .December:
+            return "Dec"
+//            default:
+//                return ""
         }
+    }
+    func monthsApart(otherMonth: Months) -> Int {
+        var result = (self.rawValue - otherMonth.rawValue)
+        if result < 0{
+            result = result * -1
+        }
+        return result;
     }
 }
 
@@ -88,24 +132,49 @@ let marchMonth = Months.March
  \
 Try removing the '= 1' from the Months enum. Now what is different?
  */
-
-
+print(Months.January.rawValue)
+print(Months.March.rawValue)
 /*:
  - Experiment:
  Finish the rest of the months for our `Months` enum. Then take a look at `abbreviatedStringForm()` function. Complete this function so that it returns the abbreviated form of the desired month as a String. ie: calling `Months.January.abbreviatedStringForm()` returns "Jan".
  */
-
+Months.December.abbreviatedStringForm()
 
 /*:
  - Experiment:
  Write a function within the enum that compares two months and determines how many months are they apart. For example: Comparing January to March would return to me '2', because January and March are two months apart.
  */
-
-
+Months.April.monthsApart(otherMonth: Months.December)
 /*:
  - Callout(Challenge):
  Create enums for the game "Rock, Paper, Scissors". Create a function within the enum that compares two hand shapes and determines the winner. Then create a function that returns ✋ , ✌️, or 👊 given rock, paper, or scissors.
 */
+enum rockPaperScissors: String {
+    case Rock
+    case Paper
+    case Scissors
+    case Tied
+    
+    func winner(against: rockPaperScissors) -> (rockPaperScissors){
+        var winner: rockPaperScissors = rockPaperScissors.Tied
+        if self == rockPaperScissors.Paper && against == rockPaperScissors.Scissors{
+            winner = rockPaperScissors.Scissors
+        }else if self == rockPaperScissors.Paper && against == rockPaperScissors.Rock{
+            winner = rockPaperScissors.Paper
+        }else if self == rockPaperScissors.Scissors && against == rockPaperScissors.Rock{
+            winner = rockPaperScissors.Rock
+        }else if self == rockPaperScissors.Scissors && against == rockPaperScissors.Paper{
+            winner = rockPaperScissors.Scissors
+        }else if self == rockPaperScissors.Rock && against == rockPaperScissors.Paper{
+            winner = rockPaperScissors.Paper
+        }else if self == rockPaperScissors.Rock && against == rockPaperScissors.Scissors{
+            winner = rockPaperScissors.Rock
+        }
+        return winner
+    }
+}
 
+rockPaperScissors.Paper.winner(against: rockPaperScissors.Scissors)
+rockPaperScissors.Rock.winner(against: rockPaperScissors.Rock)
 
 //: [Next](@next)

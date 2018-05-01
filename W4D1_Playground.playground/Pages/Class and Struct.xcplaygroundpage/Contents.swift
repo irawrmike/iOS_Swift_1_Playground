@@ -12,8 +12,9 @@
  */
 class ShapeClass {
     var numberOfSides = 0
+    var name = "Polygon"
     func description() -> String {
-        return "A shape with \(numberOfSides) sides."
+        return "A \(name) with \(numberOfSides) sides."
     }
 }
 /*:
@@ -31,12 +32,18 @@ struct ShapeStruct {
  Update the ShapeClass and add a new property 'name'. Also, update the description method to include the name when it prints.
  */
 
+// added name of Polygon to the shape class
+
 
 /*:
  - Experiment:
  Try creating an instance of the ShapeClass. We can do this by writing the class name then putting parentheses '()' after the class name. Assign it to a declared variable and try setting the variables 'numberofSides' and 'name' and calling the 'description' method.
  */
 
+var newshape = ShapeClass()
+newshape.name = "Triangle"
+newshape.numberOfSides = 3
+newshape.description()
 
 /*:
  Our ShapeClass is looking good but it is missing something important. We need an initializer to set up the class when an instance is created. We are going to create another class very similar to ShapeClass but this time, we will add the initializer.
@@ -50,8 +57,13 @@ class NamedShapeClass {
         self.name = name
     }
     
+    init(name: String, numberOfSides: Int) {
+        self.name = name;
+        self.numberOfSides = numberOfSides;
+    }
+    
     func description() -> String {
-        return "A shape with \(numberOfSides) sides."
+        return "A \(name) with \(numberOfSides) sides."
     }
 }
 
@@ -59,8 +71,8 @@ class NamedShapeClass {
  - Experiment:
  Add another initializer to our 'NamedShapeClass'. Have this initializer take in 'name' and 'numberOfSides' as its parameters. Then test it out by creating an instance of 'NamedShapeClass'.
  */
-
-
+var squareShape = NamedShapeClass(name: "Square", numberOfSides: 4)
+squareShape.description()
 /*:
  - Callout(Challenge):
  Let's make a new class named 'Square' and we will subclass 'NamedShapeClass'. This is already done for you below to showcase how to subclass.
@@ -73,7 +85,25 @@ class NamedShapeClass {
 
 class Square : NamedShapeClass {
     
+    var sideLength = 0;
+    
+    init(name: String, sideLength: Int) {
+        super.init(name: name, numberOfSides: 4)
+        self.sideLength = sideLength
+    }
+    
+    func area() -> Int{
+        return self.sideLength * self.sideLength
+    }
+    
+    override func description() -> String {
+        let description = ("A \(name) with \(numberOfSides) sides that are each \(sideLength)cm long.")
+        return description
+    }
 }
+
+var newSquare = Square(name: "square", sideLength: 34)
+print(newSquare.description())
 
 /*:
  - Callout(Challenge):
@@ -91,7 +121,29 @@ class Square : NamedShapeClass {
  - Add the drive() method to make sure it prints out "Prius"
  */
 
+class Car {
+    var model: String
+    
+    init(model: String) {
+        self.model = model
+    }
+    
+    func drive() {
+        print("Vroom vroom in my new \(model)!")
+    }
+}
 
+class Toyota : Car {
+    
+    init() {
+        super.init(model: "Prius")
+    }
+}
+
+var nissan = Car(model: "Rogue")
+nissan.drive()
+var toyota = Toyota()
+toyota.drive()
 
 /*:
  - Callout(Challenge):
@@ -102,7 +154,13 @@ First, create a Person class with a name property and a custom initializer that 
 Now create the same Person class but convert it to a struct. Uncomment 'Section B'. What do think will happen? What are the results?
 */
 // Implement Person class under here!
-
+//class Person {
+//    var name: String
+//
+//    init(name: String) {
+//        self.name = name
+//    }
+//}
 
 // Section A
 //var firstPersonObject = Person(name: "Joe")
@@ -112,17 +170,24 @@ Now create the same Person class but convert it to a struct. Uncomment 'Section 
 //print(firstPersonObject.name)
 //print(secondPersonObject.name)
 
+// expected each object to return different names but both returned "Jane"
 
 // Implement Person struct under here!
-
+struct Person {
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
 
 // Section B
-//var firstPersonStruct = Person(name: "Joe")
-//var secondPersonStruct = firstPersonStruct
-//secondPersonStruct.name = "Jane"
-//
-//print(firstPersonStruct.name)
-//print(secondPersonStruct.name)
+var firstPersonStruct = Person(name: "Joe")
+var secondPersonStruct = firstPersonStruct
+secondPersonStruct.name = "Jane"
 
+print(firstPersonStruct.name)
+print(secondPersonStruct.name)
 
+// displayed names as expected
 //: [Next](@next)

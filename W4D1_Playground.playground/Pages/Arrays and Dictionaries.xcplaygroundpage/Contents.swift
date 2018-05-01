@@ -19,19 +19,30 @@ myDictionary["Principal"] = 1
  - Experiment:
  Try creating an array and dictionary using `'let'` vs `'var'` then try adding something to them. What do you notice? For the array, you can use a method called 'append' to add something to it.
  */
+let immutableArray = [1, 2, 3]
+var mutableArray = [1, 2, 3]
+let immutableDictionary = ["students" : 5, "teachers" : 2]
+var mutableDictionary = ["students" : 5, "teachers" : 2]
 
-
+//immutableArray.append(4)
+mutableArray.append(4)
+//immutableDictionary["employers"] = 1
+mutableDictionary["employers"] = 1
 /*:
  - Experiment:
  Try creating an empty array with an explicit type `[type]`. What happens when you add a value that isn't the same type?
  */
 
+var emptyArray: [String]
+//emptyArray.append(2)
 
 /*:
  - Experiment:
  Try creating an empty dictionary with an explicit type. `[keyType: valueType]`
  */
 
+var emptyDictionary: [String : Int]
+//emptyDictionary[23] = "Backwards"
 
 /*:
  - Experiment:
@@ -44,6 +55,20 @@ myDictionary["Principal"] = 1
  - count
  */
 
+var testArray = [1, 2, 3]
+print("\(testArray)")
+testArray.append(4)
+print("\(testArray)")
+testArray.insert(0, at: 0)
+print("\(testArray)")
+testArray.remove(at: 3)
+print("\(testArray)")
+testArray.removeAll()
+print("\(testArray)")
+testArray = [0, 1, 2, 3, 4]
+testArray.reverse()
+print("\(testArray)")
+print("count is: \(testArray.count)")
 
 /*:
  - Experiment:
@@ -53,6 +78,13 @@ myDictionary["Principal"] = 1
  - count
  */
 
+var testDictionary = ["one" : 1, "two" : 2, "three" : 3]
+print("\(testDictionary["two"]!)")
+//print("\(testDictionary["TwO"]!)")
+testDictionary.removeValue(forKey: "two")
+//print("\(testDictionary["two"]!)")
+print("\(testDictionary.isEmpty)")
+print("\(testDictionary.count)")
 
 /*:
  - Callout(Challenge):
@@ -61,6 +93,11 @@ myDictionary["Principal"] = 1
     Finally, print out each person's name from the array using their index and string interpolation
 */
 
+var names: [String] = []
+names.append("John")
+names.append("Karen")
+names.append("Jane")
+print("the names are: \(names[0]), \(names[1]), \(names[2]).")
 
 /*:
  - Callout(Challenge):
@@ -75,5 +112,8 @@ myDictionary["Principal"] = 1
     On the next line, add this last person's info: Bob - $45000
  */
 
+var employees = ["John" : 50000, "Jane" : 70000, "Karen" : 62000]
+employees["Bob"] = 45000
+print("\(employees)")
 
 //: [Next](@next)

@@ -43,10 +43,20 @@ func sayHello(toPerson: String) -> String{
  Try calling all of the functions above. They all have the same function name, but the compiler doesn't complain. Can you think of why this might be?
  */
 
+sayHello()
+//sayHello(toPerson: "Mike") // compiler complains about the ambiguity of the method call
+//sayHello(toPerson: "Mike") // compiler complains about the ambiguity of the method call
+// the compiler does differentiate between the 3 methods since they are all different, I assume this is because none of them are being overridden
+
 /*:
  - Experiment:
  Try creating your own function that accepts two parameters of any type you choose. Have the function print out the two parameters and test your function.
  */
+
+func driveCar(carName: String, age: Int){
+    print("Driving a \(carName) that is \(age) year(s) old.")
+}
+driveCar(carName: "Civic", age: 5)
 
 /*:
  - Callout(Challenge):
@@ -54,10 +64,42 @@ func sayHello(toPerson: String) -> String{
  
  */
 
+func add(first: Int, second: Int) -> Int {
+    let answer = first + second
+    return answer
+}
+func subtract(first: Int, second: Int) -> Int {
+    let answer = first - second
+    return answer
+}
+func multiply(first: Int, second: Int) -> Int {
+    let answer = first * second
+    return answer
+}
+func divide(first: Int, second: Int) -> Int {
+    let answer = first / second
+    return answer
+}
+
+print(add(first: 4, second: 5))
+print(subtract(first: 7, second: 2))
+print(multiply(first: 3, second: 8))
+print(divide(first: 20, second: 2))
 /*:
  - Callout(Challenge):
  Create your own 'reverse' function that takes in an array of Int, reverses the order of the array, and returns the newly reversed array of Int. The array class has its own 'reverse' method, but do not use it for this challenge.
  */
+
+let normalArray = [1, 2, 3, 4, 5, 6]
+
+func reverseArray(_ array: [Int]) -> [Int] {
+    var reversedArray: [Int] = []
+    for i in 0..<array.count {
+        reversedArray.insert(array[i], at: 0)
+    }
+    return reversedArray
+}
+print(reverseArray(normalArray))
 
 /*:
  ## Closures
@@ -118,18 +160,48 @@ var sayHelloClosureWithReturn = { (name: String) -> String in
  Try calling all of the closures above. What do you notice that is different from calling a function?
  */
 
+sayHelloClosure()
+sayHelloClosureToPerson("Mike")
+print(sayHelloClosureWithReturn("Mike"))
+// the method does not automatically complete and the inputs are assumed to be used without the input names
+
 /*:
  - Experiment:
  Try creating your own closure that accepts two parameters of any type you choose. Have the closure print out the two parameters and test your closure.
  */
+
+var testClosure = { (name: String, age: Int) -> () in
+    print("Your name is \(name) and you are \(age) year(s) old.")
+}
+
+testClosure("Mike", 29)
 
 /*:
  - Experiment:
  Declare a variable with an explicit closure type: `(String) -> (String)`. This closure type says it takes one parameter of type String and returns a variable of type String.
  */
 
+var stringClosure = { (input: String) -> (String) in
+    let suffix = ", blah blah blah"
+    let change = input + suffix
+    return change
+}
+
+print(stringClosure("this is my string"))
 /*:
  - Callout(Challenge):
  Create a closure with at least two parameters of your choice and decide whether or not it returns anything. Then create a function that takes in your closure as a parameter and one additional parameter of your choice.
  */
 //: [Next](@next)
+
+var addition = { (number1: Int, number2: Int) -> (Int) in
+    return number1 + number2
+}
+
+func moreAddition (result: ((Int, Int) -> Int), other: Int) -> (Int){
+    let firstAddition = addition(2,3)
+    let secondAddition = firstAddition + other
+    return secondAddition
+}
+
+
